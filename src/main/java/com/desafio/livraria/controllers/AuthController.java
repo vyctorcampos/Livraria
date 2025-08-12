@@ -20,8 +20,15 @@ import com.desafio.livraria.repository.UserRepository;
 
 import jakarta.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Autenticação", description = "Endpoints de autenticação e registro de usuários")
 public class AuthController {
 
 	@Autowired
@@ -34,7 +41,17 @@ public class AuthController {
 	private TokenService tokenService;
 			
 	
-	@PostMapping("/login")
+    @PostMapping("/login")
+    @Operation(
+            summary = "Autenticar usuário",
+            description = "Autentica o usuário e retorna um token JWT",
+            security = {},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Autenticado com sucesso",
+                            content = @Content(schema = @Schema(implementation = LoginResponseDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Requisição inválida", content = @Content)
+            }
+    )
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequestDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -47,6 +64,16 @@ public class AuthController {
 	
 
     @PostMapping("/register")
+    @Operation(
+            summary = "Registrar novo usuário",
+            description = "Cria um novo usuário e retorna um token JWT",
+            security = {},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Registrado com sucesso",
+                            content = @Content(schema = @Schema(implementation = RegisterRespondeDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Usuário já existe ou dados inválidos", content = @Content)
+            }
+    )
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequestDTO data){
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
 
