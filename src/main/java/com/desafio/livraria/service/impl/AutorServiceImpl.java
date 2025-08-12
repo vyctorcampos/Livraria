@@ -64,6 +64,8 @@ public class AutorServiceImpl implements AutorService {
         autorValidates.validarNomeAutorNaoExisteParaAtualizacao(autorRequestDTO.getNome(), id);
 
         autorExistente.setNome(autorValidates.normalizarNome(autorRequestDTO.getNome()));
+        autorExistente.setEmail(autorRequestDTO.getEmail());
+        autorExistente.setIdade(autorRequestDTO.getIdade());
 
         Autor autorAtualizado = autorRepository.save(autorExistente);
         return autorMapper.toResponseDTO(autorAtualizado);
