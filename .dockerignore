@@ -1,0 +1,65 @@
+# Arquivos e diretórios que devem ser ignorados durante o build Docker
+
+# Arquivos de build e dependências (mantém apenas o JAR final)
+target/
+!target/*.jar
+
+# Arquivos de IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Arquivos de controle de versão
+.git/
+.gitignore
+.gitattributes
+
+# Arquivos de documentação
+README.md
+*.md
+docs/
+
+# Arquivos de teste
+src/test/
+**/test/
+**/tests/
+
+# Arquivos de configuração local
+.env
+.env.local
+.env.*.local
+
+# Arquivos de log
+*.log
+logs/
+
+# Arquivos temporários
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos Docker (não excluir completamente)
+# Dockerfile*
+# docker-compose*
+# .dockerignore
+
+# Arquivos de backup
+*.bak
+*.backup
+*.old
+
+# Arquivos de cache
+.cache/
+*.cache
+
+# Arquivos de configuração do Maven (não excluir completamente)
+# .m2/
+# maven-wrapper.properties
