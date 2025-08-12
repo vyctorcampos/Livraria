@@ -76,11 +76,17 @@ public class AutorController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/buscar-por-nome")
+    @GetMapping("/buscar")
     @Operation(summary = "Buscar autor por nome", security = {@SecurityRequirement(name = "bearer-jwt")})
-    public ResponseEntity<AutorResponseDTO> buscarPorNome(@RequestParam String nome) {
-        AutorResponseDTO autor = autorService.buscarPorNome(nome);
-        return ResponseEntity.ok(autor);
+    public ResponseEntity<AutorResponseDTO> buscarPorNome(@RequestParam  String nome) {
+        try {
+        	AutorResponseDTO autor = autorService.buscarPorNome(nome);
+        	 return ResponseEntity.ok(autor);
+        }catch (Exception e) {
+        	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+    	
+       
     }
 }
 
