@@ -70,6 +70,19 @@ services:
     profiles:
       - tools
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.front
+    container_name: livraria-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - livraria-network
+    restart: unless-stopped
+
 volumes:
   postgres_data:
     driver: local
